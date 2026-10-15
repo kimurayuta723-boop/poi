@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#15161D">
+<title>ぽい?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+<style>
+:root{
+  --bg:#15161D; --surface:#1F2029; --surface2:#2A2B36; --line:#33354A; --line2:#4A4D5E;
+  --text:#F4F1EA; --muted:#A3A6B8; --accent:#FFB547; --on-accent:#15161D; --bar:#6B7095;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text)}
+body{font-family:'Zen Kaku Gothic New',system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,select{font-family:inherit;color:inherit}
+.display{font-family:'Dela Gothic One','Zen Kaku Gothic New',sans-serif;font-weight:400;letter-spacing:.01em}
+.accent{color:var(--accent)}
+.muted{color:var(--muted)}
+.btn{min-height:56px;padding:0 28px;border-radius:999px;border:none;background:var(--accent);color:var(--on-accent);font-size:18px;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;border:2px solid var(--line2);color:var(--text)}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.35;cursor:default}
+.link{background:none;border:none;color:var(--muted);text-decoration:underline;font-size:14px;min-height:44px;cursor:pointer}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;padding:0 12px;border-radius:999px;background:var(--surface2);color:var(--muted);font-size:14px;white-space:nowrap}
+.chip.on{background:var(--accent);color:var(--on-accent);font-weight:700}
+.card{background:var(--surface);border-radius:18px;padding:16px 18px}
+.row{display:flex;align-items:center;gap:12px}
+.between{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.center{text-align:center}
+.kv{display:flex;justify-content:space-between;gap:12px}
+.kv span:first-child{color:var(--muted)}
+.kv span:last-child{font-weight:700;text-align:right}
+.sec{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+
+.phone{max-width:480px;margin:0 auto;min-height:100dvh;padding:20px 20px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);min-height:28px;gap:8px}
+.logo{font-size:22px;color:var(--accent)}
+.opt{width:100%;min-height:58px;text-align:left;border-radius:16px;border:3px solid transparent;background:var(--surface);font-size:17px;font-weight:700;line-height:1.4;padding:12px 18px;cursor:pointer}
+.opt.sel{border-color:var(--accent);background:var(--surface2)}
+.input{width:100%;height:58px;border:2px solid var(--line2);border-radius:16px;background:var(--surface);font-size:19px;padding:0 16px}
+.input:focus{outline:none;border-color:var(--accent)}
+.code-input{font-family:'Dela Gothic One',sans-serif;font-size:26px;letter-spacing:.2em;text-align:center}
+.big-q{font-size:27px;line-height:1.35}
+.steps{display:flex;gap:6px}.steps i{flex:1;height:6px;border-radius:3px;background:var(--line)}.steps i.on{background:var(--accent)}
+.bottom{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:8px}
+.qr{background:#fff;border-radius:18px;padding:12px;width:min(72vw,260px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#15161D;font-weight:700;margin:0 auto}
+.qr svg{width:100%;height:100%;display:block}
+.room-code{font-size:38px;letter-spacing:.12em;color:var(--accent)}
+.plist{display:flex;flex-wrap:wrap;gap:8px}
+.pchip{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 14px;border-radius:999px;background:var(--surface2);font-size:16px;font-weight:700}
+.pchip.me{outline:2px solid var(--accent)}
+.pchip .x{width:36px;height:36px;border:none;background:none;color:var(--muted);font-size:18px;cursor:pointer;border-radius:50%}
+.pchip.nox{padding-right:14px}
+details.card summary{cursor:pointer;font-weight:700;min-height:28px;list-style-position:inside}
+.genres{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.genres label{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 14px;border-radius:999px;background:var(--surface2);font-size:15px;cursor:pointer}
+.genres input{accent-color:var(--accent);width:18px;height:18px}
+.select{height:42px;border-radius:12px;background:var(--surface2);border:none;padding:0 10px;font-size:15px}
+.pbars{display:flex;flex-direction:column;gap:12px}
+.pb{display:flex;flex-direction:column;gap:6px;font-size:15px;font-weight:700}
+.pb.dim{opacity:.45}
+.pb .n{font-weight:400;white-space:nowrap}.pb .n b{font-family:'Dela Gothic One',sans-serif;font-weight:400;font-size:20px}
+.ptrack{height:28px;border-radius:8px;background:var(--surface)}
+.pbar{height:100%;border-radius:8px;background:var(--bar);min-width:6px;transition:width .6s ease}
+.pb.hit .pbar{background:var(--accent)}
+.answer-pill{display:inline-block;padding:14px 24px;border-radius:18px;background:var(--accent);color:var(--on-accent);font-size:28px;line-height:1.3}
+.result-badge{font-size:52px;line-height:1.1}
+.progress{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);width:0}
+.rank{display:flex;align-items:center;gap:12px;height:50px;padding:0 16px;border-radius:14px;background:var(--surface);border:2px solid transparent;font-weight:700}
+.rank.me{border-color:var(--accent)}
+.rank .p{width:28px;font-family:'Dela Gothic One',sans-serif;font-weight:400}
+.award .t{color:var(--accent);font-weight:700;font-size:13px}
+.award .n{font-size:22px}
+.mode-note{background:#2E2410;color:#FFD08A;border-bottom:1px solid #5A4520;padding:8px 16px;font-size:12px;line-height:1.5;text-align:center}
+</style>
+</head>
+<body>
+<div id="app"><div class="phone"><p class="muted">読み込み中…</p></div></div>
+
+<script src="questions.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script>
+/* =========================================================
+   ここに Firebase の設定を貼り付けます(手順は README.md)。
+   null のままだと「テストモード」になり、同じブラウザの
+   タブどうしでだけ遊べます(スマホからは参加できません)。
+   ========================================================= */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAsh461z8-RYIpvFFQ8MuNvh4GhEcxPwAI",
+  authDomain: "poi-game-b5772.firebaseapp.com",
+  databaseURL: "https://poi-game-b5772-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "poi-game-b5772",
+  storageBucket: "poi-game-b5772.firebasestorage.app",
+  messagingSenderId: "134536543517",
+  appId: "1:134536543517:web:d0d26330703188b58135f4"
+};
+
+/* ---------- 基本 ---------- */
+const QUESTIONS = window.POI_QUESTIONS || [];
+const GENRES = [...new Set(QUESTIONS.map(q => q.genre))];
+const DEFAULT_GENRES = ['朝と夜', '食べ物', '休日', '趣味'].filter(g => GENRES.includes(g));
+const MODE = FIREBASE_CONFIG ? 'online' : 'local';
+const idStore = MODE === 'online' ? localStorage : sessionStorage;
+const params = new URLSearchParams(location.search);
+const ROOM = (params.get('room') || '').replace(/\D/g, '').slice(0, 6) || null;
+const DAY = 24 * 60 * 60 * 1000;
+const HERO_INTRO_MS = 4000;
+const MAX_PLAYERS = 10;
+const app = document.getElementById('app');
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const rid = n => Array.from(crypto.getRandomValues(new Uint8Array(n)), b => 'abcdefghijkmnpqrstuvwxyz23456789'[b % 32]).join('');
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const arr = v => Array.isArray(v) ? v : (v && typeof v === 'object' ? Object.values(v) : []);
+function getPath(obj, path) { return path ? path.split('/').reduce((o, k) => (o == null ? undefined : o[k]), obj) : obj; }
+function setPath(obj, path, val) {
+  const ks = path.split('/'); let o = obj;
+  for (let i = 0; i < ks.length - 1; i++) { if (typeof o[ks[i]] !== 'object' || o[ks[i]] === null) o[ks[i]] = {}; o = o[ks[i]]; }
+  const k = ks[ks.length - 1];
+  if (val === null || val === undefined) delete o[k]; else o[k] = val;
+}
+function loadScript(src) {
+  return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error(src)); document.head.appendChild(s); });
+}
+
+/* ---------- データの置き場所(Firebase / テストモード) ---------- */
+async function makeStore() {
+  if (MODE === 'online') {
+    const v = '10.12.2';
+    await loadScript(`https://www.gstatic.com/firebasejs/${v}/firebase-app-compat.js`);
+    await loadScript(`https://www.gstatic.com/firebasejs/${v}/firebase-database-compat.js`);
+    firebase.initializeApp(FIREBASE_CONFIG);
+    const db = firebase.database(); let offset = 0;
+    db.ref('.info/serverTimeOffset').on('value', s => { offset = s.val() || 0; });
+    const ref = (c, p) => db.ref('rooms/' + c + (p ? '/' + p : ''));
+    return {
+      now: () => Date.now() + offset,
+      ts: () => firebase.database.ServerValue.TIMESTAMP,
+      async exists(c) { try { return (await ref(c).get()).exists(); } catch (e) { return true; } },
+      watch(c, cb) { ref(c).on('value', s => cb(s.val()), err => cb(null, err)); },
+      set: (c, p, val) => ref(c, p).set(val),
+      update: (c, obj) => ref(c).update(obj),
+      tx: (c, p, fn) => ref(c, p).transaction(cur => fn(cur)),
+      remove: c => ref(c).remove()
+    };
+  }
+  const key = c => 'poi-room-' + c; const subs = {};
+  const read = c => { try { return JSON.parse(localStorage.getItem(key(c))); } catch (e) { return null; } };
+  const emit = c => (subs[c] || []).forEach(f => f(read(c)));
+  const write = (c, o) => { if (o === null) localStorage.removeItem(key(c)); else localStorage.setItem(key(c), JSON.stringify(o)); emit(c); };
+  addEventListener('storage', e => { for (const c in subs) if (e.key === key(c)) emit(c); });
+  return {
+    now: () => Date.now(),
+    ts: () => Date.now(),
+    async exists(c) { return !!read(c); },
+    watch(c, cb) { (subs[c] = subs[c] || []).push(cb); cb(read(c)); },
+    async set(c, p, val) { if (!p) return write(c, val); const o = read(c) || {}; setPath(o, p, val); write(c, o); },
+    async update(c, obj) { const o = read(c); if (!o) return; for (const p in obj) setPath(o, p, obj[p]); write(c, o); },
+    async tx(c, p, fn) { const o = read(c); if (!o) return; const cur = JSON.parse(JSON.stringify(getPath(o, p) ?? null)); const n = fn(cur); if (n === undefined) return; setPath(o, p, n); write(c, o); },
+    async remove(c) { write(c, null); }
+  };
+}
+
+/* ---------- 状態 ---------- */
+let store = null, room = null, roomErr = null, lastHtml = '', autoBusy = false;
+const ui = { qid: null, sel: null, step: 1, truth: null, free: '', name: '', hname: '', code: '' };
+const myPid = () => ROOM ? idStore.getItem('poi-pid-' + ROOM) : null;
+const isHost = () => !!(room && room.hostToken && room.hostToken === idStore.getItem('poi-host-' + ROOM));
+const players = () => room?.players || {};
+const nameOf = p => players()[p]?.name || '(退出)';
+const st = () => room?.state || {};
+const heroPid = (s = st()) => arr(s.order)[s.heroIdx];
+const settings = () => ({ genres: arr(room?.settings?.genres), perHero: room?.settings?.perHero || 3, time: room?.settings?.time || 20 });
+const answersFor = qid => (room?.answers && room.answers[qid]) || {};
+const answersNow = () => answersFor(st().qid);
+const optLabel = (q, i) => i === -1 ? null : (arr(q?.opts)[i] ?? '');
+const truthLabel = (sm, q = st().question) => sm.t === -1 ? (sm.f || 'どれでもない') : optLabel(q, sm.t);
+const joinUrl = () => location.origin + location.pathname + '?room=' + ROOM;
+const roundText = () => `${(st().heroIdx || 0) + 1}人目 / ${arr(st().order).length}人 ・ お題 ${(st().qIdx || 0) + 1}/${settings().perHero}`;
+
+/* ---------- 起動 ---------- */
+(async () => {
+  try { store = await makeStore(); }
+  catch (e) { app.innerHTML = `<div class="phone"><h1 class="display accent">ぽい?</h1><p>通信の準備に失敗しました。電波の良い場所で再読み込みしてください。</p></div>`; return; }
+  if (MODE === 'local') {
+    const n = document.createElement('div'); n.className = 'mode-note';
+    n.textContent = 'テストモード:同じブラウザのタブどうしでのみ動きます。スマホで遊ぶには README の手順で Firebase を設定してください。';
+    document.body.prepend(n);
+  }
+  if (!ROOM) { render(); return; }
+  store.watch(ROOM, (data, err) => { room = data; roomErr = err || null; render(); autoLogic(); });
+  setInterval(() => { render(); tickTimers(); autoLogic(); }, 250);
+})();
+
+/* 画面が消えないようにする(対応ブラウザのみ) */
+let wakeLock = null;
+async function keepAwake() {
+  try { if ('wakeLock' in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch (e) {}
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && ROOM) keepAwake(); });
+
+/* ---------- 描画 ---------- */
+function render() {
+  let html;
+  if (!ROOM) html = viewTop();
+  else if (!room || (room.createdAt && store.now() - room.createdAt > DAY)) html = viewEnded();
+  else html = viewPhone();
+  if (html === lastHtml) return;
+  lastHtml = html;
+  app.innerHTML = html;
+  for (const k of ['name', 'hname', 'free', 'code']) { const el = app.querySelector('#' + k); if (el) el.value = ui[k]; }
+  tickTimers();
+}
+function tickTimers() {
+  if (!store) return;
+  const now = store.now();
+  app.querySelectorAll('[data-deadline]').forEach(el => { el.textContent = Math.max(0, Math.ceil((+el.dataset.deadline - now) / 1000)); });
+  app.querySelectorAll('[data-since]').forEach(el => {
+    const ms = Math.max(0, now - +el.dataset.since); const dur = +(el.dataset.dur || 30000);
+    if (el.tagName === 'I') el.style.width = Math.min(100, ms / dur * 100) + '%';
+    else { const sec = Math.floor(ms / 1000); el.textContent = `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`; }
+  });
+}
+
+/* ---------- トップ・終了 ---------- */
+function viewTop() {
+  return `<div class="phone" style="gap:18px">
+    <div class="center" style="margin-top:24px">
+      <div class="display accent" style="font-size:80px;line-height:1">ぽい?</div>
+      <div style="font-size:19px;font-weight:700;margin-top:14px">第一印象、答え合わせしよう。</div>
+      <div class="muted" style="font-size:13px;margin-top:6px">3〜10人 ・ スマホだけで遊べます</div>
+    </div>
+    <div class="card stack">
+      <div class="sec">QRコードがない人は</div>
+      <label for="code" class="muted" style="font-size:14px">部屋コード(6桁)を入力して参加</label>
+      <input id="code" class="input code-input" inputmode="numeric" maxlength="6" autocomplete="off" data-input="code">
+      <button class="btn wide" data-act="joinCode">参加する</button>
+    </div>
+    <div class="card stack">
+      <div class="sec">ホストになる人は</div>
+      <label for="hname" class="muted" style="font-size:14px">あなたの名前(10文字まで)</label>
+      <input id="hname" class="input" maxlength="10" autocomplete="nickname" data-input="hname">
+      <button class="btn ghost wide" data-act="create">部屋をつくる</button>
+    </div>
+  </div>`;
+}
+function viewEnded() {
+  const msg = roomErr ? 'この部屋は終了しました。' : 'この部屋は見つかりませんでした。終了したか、コードが違う可能性があります。';
+  return `<div class="phone" style="justify-content:center;text-align:center;gap:20px">
+    <div class="display accent" style="font-size:56px">ぽい?</div>
+    <p style="font-size:17px;line-height:1.7">${msg}</p>
+    <button class="btn wide" data-act="home">トップへ</button></div>`;
+}
+
+/* ---------- 部品 ---------- */
+function topBar(right) {
+  const me = players()[myPid()];
+  return `<div class="top"><span class="display logo">ぽい?</span><span>${right ?? (me ? esc(me.name) + ' さん' : '')}</span></div>`;
+}
+function bars(sm, q, reveal) {
+  const counts = arr(sm.counts); const total = Math.max(1, sm.total || 0);
+  return `<div class="pbars">${arr(q.opts).map((o, i) => {
+    const n = counts[i] || 0; const cls = reveal ? (sm.t === i ? 'hit' : 'dim') : '';
+    return `<div class="pb ${cls}"><div class="between"><span>${esc(o)}</span><span class="n"><b>${n}</b> 人</span></div><div class="ptrack"><div class="pbar" style="width:${n / total * 100}%"></div></div></div>`;
+  }).join('')}</div>`;
+}
+/* 主役が進める画面で、主役のスマホが止まったときにホストが代わりに進めるリンク */
+function hostFallback(amHero) {
+  if (!isHost()) return '';
+  return `<div class="row" style="justify-content:center;gap:4px;flex-wrap:wrap">
+    ${amHero ? '' : `<button class="link" data-act="force">主役の代わりに進める</button>`}
+    <button class="link" data-act="skipHero">この主役を飛ばす</button></div>`;
+}
+
+/* ---------- 画面 ---------- */
+function viewPhone() {
+  const pid = myPid(); const me = pid && players()[pid];
+  if (!me) return viewJoin();
+  const s = st(); const h = heroPid(); const amHero = pid === h;
+  if (s.qid !== ui.qid) { ui.qid = s.qid; ui.sel = null; ui.step = 1; ui.truth = null; ui.free = ''; }
+  switch (s.phase) {
+    case 'lobby': return viewLobby();
+    case 'hero': return viewHero(amHero);
+    case 'answer': return amHero ? viewHeroAnswer() : viewGuess();
+    case 'spread': return viewSpread(amHero);
+    case 'reveal': return viewReveal(amHero);
+    case 'talk': return viewTalk(amHero);
+    case 'result': return viewResult();
+  }
+  return viewLobby();
+}
+function viewJoin() {
+  const s = st(); const full = Object.keys(players()).length >= MAX_PLAYERS;
+  return `<div class="phone" style="justify-content:center;gap:20px">
+    <div class="display accent center" style="font-size:56px">ぽい?</div>
+    <div class="center" style="font-size:19px;font-weight:700">部屋 ${ROOM.slice(0, 3)} ${ROOM.slice(3)} に参加</div>
+    ${full ? `<div class="card">この部屋は満員です(${MAX_PLAYERS}人まで)。</div>` : `
+    <div class="stack">
+      <label for="name" class="muted" style="font-size:14px">名前(ニックネームでOK・10文字まで)</label>
+      <input id="name" class="input" maxlength="10" autocomplete="nickname" data-input="name">
+    </div>
+    <button class="btn wide" data-act="join">参加する</button>
+    ${s.phase && s.phase !== 'lobby' ? `<div class="muted center" style="font-size:14px">ゲームの途中から参加します</div>` : ''}`}
+    <div class="muted center" style="font-size:12px;line-height:1.6">ログインは不要です。<br>回答は部屋が終わるか、24時間で読めなくなります。</div>
+  </div>`;
+}
+function playerChips(canKick) {
+  const ps = players(); const me = myPid();
+  return `<div class="plist">${Object.keys(ps).map(p => {
+    const kick = canKick && p !== me;
+    return `<span class="pchip ${p === me ? 'me' : ''} ${kick ? '' : 'nox'}">${esc(ps[p].name)}${p === room.hostPid ? ' <span class="muted" style="font-size:12px;font-weight:400">ホスト</span>' : ''}${kick ? `<button class="x" data-act="kick" data-v="${p}" aria-label="${esc(ps[p].name)}さんを外す">×</button>` : ''}</span>`;
+  }).join('')}</div>`;
+}
+function viewLobby() {
+  const n = Object.keys(players()).length;
+  if (!isHost()) return `<div class="phone">${topBar()}
+    <div class="stack center" style="margin-top:36px;align-items:center;gap:10px">
+      <div class="muted">参加しました</div>
+      <div class="display accent" style="font-size:38px">${esc(nameOf(myPid()))} さん</div>
+      <button class="link" data-act="rename">名前を変更</button>
+    </div>
+    <div class="card stack"><div class="between"><span class="sec">参加者</span><span class="muted">${n}人</span></div>${playerChips(false)}</div>
+    <div class="bottom"><div class="card center" style="font-weight:700;line-height:1.7">ホストが始めるまでお待ちください</div></div></div>`;
+  const set = settings();
+  let qr = '[QRコード]';
+  try { const q = qrcode(0, 'M'); q.addData(joinUrl()); q.make(); qr = q.createSvgTag({ cellSize: 6, margin: 0, scalable: true }); } catch (e) {}
+  const opt = (v, cur, unit) => `<option value="${v}" ${v === cur ? 'selected' : ''}>${v}${unit}</option>`;
+  return `<div class="phone">${topBar('あなたはホストです')}
+    <div class="center" style="font-weight:700;font-size:17px">みんなにこの画面を見せて、QRコードを読み取ってもらおう</div>
+    <div class="qr">${qr}</div>
+    <div class="center"><div class="muted" style="font-size:13px">部屋コード</div><div class="display room-code">${ROOM.slice(0, 3)} ${ROOM.slice(3)}</div></div>
+    <div class="row" style="justify-content:center;flex-wrap:wrap">
+      <button class="btn ghost" style="min-height:48px;font-size:16px" data-act="share">リンクを送る</button>
+      ${MODE === 'local' ? `<a class="btn ghost" style="min-height:48px;font-size:16px;display:inline-flex;align-items:center;text-decoration:none" href="${esc(joinUrl())}" target="_blank" rel="noopener">テスト用:参加者タブ</a>` : ''}
+    </div>
+    <div class="card stack"><div class="between"><span class="sec">参加者</span><span class="muted">${n}人</span></div>${playerChips(true)}</div>
+    <details class="card">
+      <summary>ゲームの設定</summary>
+      <div class="genres">${GENRES.map(g => `<label><input type="checkbox" data-act="genre" data-v="${esc(g)}" ${set.genres.includes(g) ? 'checked' : ''}>${esc(g)}</label>`).join('')}</div>
+      <div class="stack" style="margin-top:14px">
+        <label class="between">主役1人あたりのお題 <select class="select" data-act="perHero">${[2, 3].map(v => opt(v, set.perHero, '問')).join('')}</select></label>
+        <label class="between">回答時間 <select class="select" data-act="time">${[15, 20, 30].map(v => opt(v, set.time, '秒')).join('')}</select></label>
+      </div>
+    </details>
+    <div class="bottom">
+      <div class="muted center" style="font-size:13px">${n < 3 ? '3人以上で始められます(4人以上がおすすめ)' : 'みんなそろったら始めましょう'}</div>
+      <button class="btn wide" style="min-height:62px" data-act="start" ${n < 3 || !set.genres.length ? 'disabled' : ''}>ゲームを始める</button>
+    </div></div>`;
+}
+function viewHero(amHero) {
+  const s = st(); const h = heroPid();
+  const prog = `<div class="progress"><i data-since="${s.heroAt}" data-dur="${HERO_INTRO_MS}"></i></div><div class="muted center" style="font-size:13px">まもなくお題が出ます</div>`;
+  if (amHero) return `<div class="phone">${topBar(roundText())}
+    <div class="display accent" style="font-size:46px;line-height:1.25;margin-top:24px">あなたが<br>主役!</div>
+    <div style="line-height:1.7">お題ごとに2つ選びます。</div>
+    <div class="card row"><span class="chip on">1</span><b>自分の本当の答え</b></div>
+    <div class="card row"><span class="chip on">2</span><b>みんなが一番選びそうな答え</b></div>
+    <div class="muted" style="font-size:14px;line-height:1.7">正直に答えるほど盛り上がります。答え合わせや「次へ」は、あなたのスマホで進めます。</div>
+    <div class="bottom">${prog}</div></div>`;
+  return `<div class="phone">${topBar(roundText())}
+    <div class="stack center" style="margin-top:56px;gap:12px">
+      <div class="muted" style="font-size:17px">今回の主役は</div>
+      <div class="display accent" style="font-size:46px;line-height:1.2">${esc(nameOf(h))} さん</div>
+      <div class="muted" style="line-height:1.7">第一印象から、${esc(nameOf(h))}さんの<br>答えを予想しよう</div>
+    </div>
+    <div class="bottom">${prog}${hostFallback(false).replace(/<button class="link" data-act="force">.*?<\/button>/, '')}</div></div>`;
+}
+function answeredLine() {
+  const ans = answersNow(); const h = heroPid();
+  const guessers = Object.keys(players()).filter(p => p !== h);
+  const done = guessers.filter(p => ans[p] && ans[p].c != null).length;
+  const heroDone = ans[h] && ans[h].t != null && ans[h].m != null;
+  return `<div class="card stack" style="gap:8px">
+    <div class="kv"><span>予想した人</span><span>${done} / ${guessers.length}人</span></div>
+    <div class="kv"><span>主役(${esc(nameOf(h))}さん)</span><span>${heroDone ? '回答済み' : '回答中…'}</span></div></div>`;
+}
+function viewGuess() {
+  const s = st(); const q = s.question; const pid = myPid(); const mine = answersNow()[pid];
+  const timeUp = store.now() >= s.deadline;
+  const head = `${topBar(`${roundText()} ・ 残り <span data-deadline="${s.deadline}"></span>秒`)}
+    <div class="muted" style="font-size:15px">${esc(nameOf(heroPid()))}さんの</div>
+    <div class="display big-q" style="margin-top:-8px">${esc(q.text)}</div>`;
+  if (mine && mine.c != null) return `<div class="phone">${head}
+    <div class="muted" style="margin-top:12px">あなたの予想</div>
+    <div class="card display" style="font-size:22px;border:3px solid var(--accent)">${esc(optLabel(q, mine.c))}</div>
+    <div class="bottom">${answeredLine()}</div></div>`;
+  if (timeUp) return `<div class="phone">${head}
+    <div class="stack center" style="margin-top:32px"><div class="display" style="font-size:30px">時間切れ…</div><div class="muted">次のお題でがんばろう</div></div>
+    <div class="bottom">${answeredLine()}</div></div>`;
+  return `<div class="phone">${head}
+    <div class="accent" style="font-weight:700">${esc(nameOf(heroPid()))}さんの答えを予想しよう</div>
+    <div class="stack" style="gap:10px">${arr(q.opts).map((o, i) => `<button class="opt ${ui.sel === i ? 'sel' : ''}" data-act="pick" data-v="${i}">${esc(o)}</button>`).join('')}</div>
+    <div class="bottom"><button class="btn wide" data-act="submitGuess" ${ui.sel == null ? 'disabled' : ''}>決定</button></div></div>`;
+}
+function viewHeroAnswer() {
+  const s = st(); const q = s.question; const pid = myPid(); const mine = answersNow()[pid];
+  const swapsLeft = !(s.swaps && s.swaps[pid]);
+  const timeUp = store.now() >= s.deadline;
+  const top = topBar(timeUp ? `${roundText()} ・ みんな待ってるよ` : `${roundText()} ・ 残り <span data-deadline="${s.deadline}"></span>秒`);
+  if (mine && mine.t != null && mine.m != null) return `<div class="phone">${top}
+    <div class="display big-q">${esc(q.text)}</div>
+    <div class="card stack">
+      <div class="kv"><span>本当の答え</span><span>${esc(mine.t === -1 ? (mine.f || 'どれでもない') : optLabel(q, mine.t))}</span></div>
+      <div class="kv"><span>みんなの予想</span><span>${esc(optLabel(q, mine.m))}</span></div>
+    </div>
+    <div class="bottom"><div class="muted center" style="font-size:14px">みんなの予想がそろうと、自動で次に進みます</div>${answeredLine()}</div></div>`;
+  if (ui.step === 1) return `<div class="phone">${top}
+    <div class="steps"><i class="on"></i><i></i></div>
+    <div class="display big-q">${esc(q.text)}</div>
+    <div class="accent" style="font-weight:700">① あなたの本当の答えは?</div>
+    <div class="stack" style="gap:10px">
+      ${arr(q.opts).map((o, i) => `<button class="opt ${ui.truth === i ? 'sel' : ''}" data-act="truth" data-v="${i}">${esc(o)}</button>`).join('')}
+      <button class="opt ${ui.truth === -1 ? 'sel' : ''}" data-act="truth" data-v="-1" style="font-weight:400">どれでもない(自分で書く)</button>
+      ${ui.truth === -1 ? `<label for="free" class="muted" style="font-size:14px">本当の答え(20文字まで)</label><input id="free" class="input" maxlength="20" data-input="free">` : ''}
+    </div>
+    <div class="bottom">
+      <button class="btn wide" data-act="heroStep2" ${ui.truth == null ? 'disabled' : ''}>次へ</button>
+      ${swapsLeft ? `<button class="link" data-act="swap">このお題を交換する(1回だけ)</button>` : ''}
+    </div></div>`;
+  return `<div class="phone">${top}
+    <div class="steps"><i class="on"></i><i class="on"></i></div>
+    <div class="card row" style="font-size:14px"><span class="muted">本当の答え:</span><b>${esc(ui.truth === -1 ? (ui.free || 'どれでもない') : optLabel(q, ui.truth))}</b></div>
+    <div class="display" style="font-size:23px;line-height:1.4">② みんなが一番選びそうな答えは?</div>
+    <div class="stack" style="gap:10px">${arr(q.opts).map((o, i) => `<button class="opt ${ui.sel === i ? 'sel' : ''}" data-act="pick" data-v="${i}">${esc(o)}</button>`).join('')}</div>
+    <div class="bottom">
+      <button class="btn wide" data-act="submitHero" ${ui.sel == null ? 'disabled' : ''}>決定</button>
+      <button class="link" data-act="heroBack">① に戻る</button>
+    </div></div>`;
+}
+function viewSpread(amHero) {
+  const s = st(); const sm = s.summary || {}; const q = s.question; const h = heroPid();
+  return `<div class="phone">${topBar(roundText())}
+    <div><div class="display accent" style="font-size:30px">みんなの予想</div><div class="muted" style="margin-top:4px">${esc(nameOf(h))}さんの「${esc(q.text)}」</div></div>
+    ${bars(sm, q, false)}
+    <div class="muted" style="font-size:13px">誰が何を選んだかは表示されません</div>
+    <div class="bottom">
+      ${amHero ? `<button class="btn wide" style="min-height:62px" data-act="reveal">本当の答えを発表する</button>`
+        : `<div class="card center" style="font-weight:700">${esc(nameOf(h))}さんの発表を待とう</div>`}
+      ${hostFallback(amHero)}
+    </div></div>`;
+}
+function viewReveal(amHero) {
+  const s = st(); const sm = s.summary || {}; const q = s.question; const pid = myPid(); const h = heroPid();
+  const score = (s.scores || {})[pid] || 0;
+  let mineCard;
+  if (amHero) {
+    mineCard = `<div class="card stack" style="gap:6px">
+      <div class="kv"><span>みんなの予想を</span><span>${sm.majHit ? '当てた!' : 'はずした'}${sm.heroPts ? `(+${sm.heroPts})` : ''}</span></div>
+      ${sm.match ? `<div class="muted" style="font-size:13px">見た目どおりボーナス +1</div>` : ''}
+      <div class="kv"><span>正解した人</span><span>${arr(sm.correct).length} / ${sm.total || 0}人</span></div></div>`;
+  } else {
+    const mine = (sm.guesses || {})[pid]; const hit = mine != null && mine === sm.t;
+    mineCard = `<div class="card stack" style="gap:6px">
+      <div class="between"><span class="display ${hit ? 'accent' : ''}" style="font-size:28px">${mine == null ? '回答なし' : hit ? '当たり!' : 'はずれ…'}</span>${hit ? `<span class="display" style="font-size:24px">+2</span>` : ''}</div>
+      <div class="kv"><span>あなたの予想</span><span>${mine == null ? '—' : esc(optLabel(q, mine))}</span></div>
+      ${hit && arr(sm.correct).length === 1 ? `<div class="muted" style="font-size:13px">正解したのは、あなただけ</div>` : ''}</div>`;
+  }
+  return `<div class="phone">${topBar(roundText())}
+    <div class="stack" style="gap:8px"><div class="muted">${esc(nameOf(h))}さんの答えは…</div><div><span class="display answer-pill">${esc(truthLabel(sm, q))}</span></div></div>
+    ${sm.t === -1 ? `<div class="muted" style="font-size:14px">選択肢になかったので、今回は正解者なし</div>` : ''}
+    ${mineCard}
+    ${bars(sm, q, true)}
+    <div class="bottom">
+      <div class="center muted" style="font-size:14px">現在のあなたの得点 <b class="display" style="font-size:20px;color:var(--text)">${score}</b> 点</div>
+      ${amHero ? `<button class="btn wide" data-act="toTalk">ひとことへ</button>` : ''}
+      ${hostFallback(amHero)}
+    </div></div>`;
+}
+function viewTalk(amHero) {
+  const s = st(); const h = heroPid();
+  return `<div class="phone">${topBar(roundText())}
+    <span class="chip on" style="align-self:flex-start">ひとこと</span>
+    <div class="muted">${amHero ? 'みんなに話してみよう' : `${esc(nameOf(h))}さんに聞いてみよう`}</div>
+    <div class="display" style="font-size:28px;line-height:1.45">${esc(s.prompt || '')}</div>
+    <div class="stack" style="gap:6px;margin-top:8px">
+      <div class="between muted" style="font-size:13px"><span>話す時間の目安</span><span><b style="color:var(--text)" data-since="${s.talkAt}"></b> / 0:30</span></div>
+      <div class="progress"><i data-since="${s.talkAt}" data-dur="30000"></i></div>
+    </div>
+    <div class="bottom">
+      ${amHero ? `<div class="muted center" style="font-size:13px">一言でも大丈夫。時間がきても止まりません</div><button class="btn wide" style="min-height:62px" data-act="next">話し終わった・次へ</button>`
+        : `<div class="card center" style="font-weight:700">${esc(nameOf(h))}さんの話を聞こう</div>`}
+      ${hostFallback(amHero)}
+    </div></div>`;
+}
+function ranking() {
+  const sc = st().scores || {};
+  const list = Object.keys(players()).map(p => ({ p, pt: sc[p] || 0 })).sort((a, b) => b.pt - a.pt);
+  list.forEach((r, i) => { r.pos = i && list[i - 1].pt === r.pt ? list[i - 1].pos : i + 1; });
+  return list;
+}
+function awards() {
+  const ids = Object.keys(players()); const stats = st().stats || {};
+  const S = p => stats[p] || {};
+  const best = (f, dir) => { let v = null, w = []; ids.forEach(p => { const x = f(p); if (x == null) return; if (v == null || (dir > 0 ? x > v : x < v)) { v = x; w = [p]; } else if (x === v) w.push(p); }); return { w, v }; };
+  const rate = p => S(p).hg > 0 ? S(p).hc / S(p).hg : null;
+  const out = [];
+  const a = best(p => S(p).gc || 0, 1); if (a.v > 0) out.push({ t: '人を見る目がある人', w: a.w, n: `予想の正解 ${a.v}問` });
+  const b = best(p => S(p).mh || 0, 1); if (b.v > 0) out.push({ t: '自分をわかっている人', w: b.w, n: `「みんなの予想」を${b.v}問的中` });
+  const c = best(rate, 1); if (c.v != null) out.push({ t: '見た目どおり大賞', w: c.w, n: `みんなの正解率 ${Math.round(c.v * 100)}%` });
+  const d = best(rate, -1); if (d.v != null && ids.length > 1) out.push({ t: 'ギャップ大賞', w: d.w, n: `みんなの正解率 ${Math.round(d.v * 100)}%` });
+  return out;
+}
+function viewResult() {
+  const pid = myPid(); const r = ranking(); const mine = r.find(x => x.p === pid) || { pos: '-', pt: 0 };
+  const S = (st().stats || {})[pid] || {};
+  return `<div class="phone">${topBar()}
+    <div class="display accent" style="font-size:34px">結果発表</div>
+    <div class="row" style="align-items:baseline;gap:14px"><div class="display" style="font-size:56px">${mine.pos}位</div><div><span class="display" style="font-size:30px">${mine.pt}</span> 点</div></div>
+    <div class="stack" style="gap:8px">${r.map(x => `<div class="rank ${x.p === pid ? 'me' : ''}"><span class="p">${x.pos}</span><span style="flex:1">${esc(nameOf(x.p))}</span><span><span class="display" style="font-size:20px">${x.pt}</span> 点</span></div>`).join('')}</div>
+    <div class="sec" style="margin-top:6px">称号</div>
+    <div class="stack" style="gap:8px">${awards().map(a => `<div class="card award ${a.w.includes(pid) ? '' : ''}" style="${a.w.includes(pid) ? 'border:2px solid var(--accent)' : ''}"><div class="t">${a.t}</div><div class="display n">${a.w.map(p => esc(nameOf(p))).join('・')}</div><div class="muted" style="font-size:13px">${a.n}</div></div>`).join('')}</div>
+    <div class="card stack" style="gap:8px">
+      <div class="sec">あなたの記録</div>
+      <div class="kv"><span>予想が当たった数</span><span>${S.gc || 0}問</span></div>
+      <div class="kv"><span>主役で「みんなの予想」的中</span><span>${S.mh || 0} / ${S.hq || 0}</span></div>
+      <div class="kv"><span>みんなに当てられた数</span><span>${S.hc || 0} / ${S.hg || 0}</span></div>
+    </div>
+    <div class="bottom">
+      ${isHost() ? `<button class="btn wide" data-act="again">もう1周あそぶ</button><button class="btn ghost wide" data-act="end">終わる(データを削除)</button>`
+        : `<div class="muted center" style="font-size:13px">ホストが「もう1周」を選ぶと続けて遊べます</div>`}
+    </div></div>`;
+}
+
+/* ---------- 進行(状態の書き換えは transaction で、二重に進まないようにする) ---------- */
+function newQ(s, qIdx) {
+  const gs = settings().genres.length ? settings().genres : GENRES;
+  let used = arr(s.usedIds);
+  let pool = QUESTIONS.filter(q => gs.includes(q.genre) && !used.includes(q.id));
+  if (!pool.length) { used = []; pool = QUESTIONS.filter(q => gs.includes(q.genre)); }
+  const q = pool[Math.floor(Math.random() * pool.length)];
+  s.phase = 'answer'; s.question = { id: q.id, genre: q.genre, text: q.text, opts: shuffle(q.opts) };
+  s.usedIds = [...used, q.id]; s.qid = (s.qid || 0) + 1; s.qIdx = qIdx;
+  s.deadline = store.now() + settings().time * 1000; s.summary = null; s.prompt = null;
+  return s;
+}
+function heroDoneOf(s) { const a = answersFor(s.qid)[heroPid(s)]; return !!(a && a.t != null && a.m != null); }
+function toSpread(s) {
+  if (!heroDoneOf(s)) return;
+  const h = heroPid(s); const ans = answersFor(s.qid); const ps = players();
+  const counts = [0, 0, 0, 0]; const guesses = {};
+  for (const p in ans) { if (p === h || !ps[p]) continue; const c = ans[p].c; if (c >= 0 && c < 4) { counts[c]++; guesses[p] = c; } }
+  const t = ans[h].t, m = ans[h].m, max = Math.max(...counts);
+  const majSet = max > 0 ? counts.map((n, i) => n === max ? i : -1).filter(i => i >= 0) : [];
+  const correct = t >= 0 ? Object.keys(guesses).filter(p => guesses[p] === t) : [];
+  const majHit = majSet.includes(m); const match = majHit && t >= 0 && m === t;
+  const scores = { ...(s.scores || {}) }; const stats = s.stats || {};
+  const S = p => stats[p] || (stats[p] = { gc: 0, mh: 0, hq: 0, hc: 0, hg: 0 });
+  correct.forEach(p => { scores[p] = (scores[p] || 0) + 2; S(p).gc++; });
+  const heroPts = (majHit ? 2 : 0) + (match ? 1 : 0); scores[h] = (scores[h] || 0) + heroPts;
+  const hs = S(h); hs.hq++; if (majHit) hs.mh++; hs.hg += Object.keys(guesses).length; hs.hc += correct.length;
+  s.phase = 'spread'; s.scores = scores; s.stats = stats;
+  s.summary = { counts, t, f: ans[h].f || '', m, majSet, correct, majHit, match, heroPts, total: Object.keys(guesses).length, guesses };
+  return s;
+}
+function nextHero(s) {
+  const order = arr(s.order); const ps = players();
+  let i = (s.heroIdx || 0) + 1; while (i < order.length && !ps[order[i]]) i++;
+  if (i < order.length) { s.phase = 'hero'; s.heroIdx = i; s.qIdx = 0; s.heroAt = store.now(); s.summary = null; }
+  else s.phase = 'result';
+  return s;
+}
+function advance(s) { return (s.qIdx || 0) + 1 < settings().perHero ? newQ(s, (s.qIdx || 0) + 1) : nextHero(s); }
+const PROMPTS = [
+  x => `「${x}」なのは、なんで?`,
+  x => `「${x}」って、いつからそうなの?`,
+  x => `「${x}」にまつわるエピソードある?`,
+  x => `「${x}」、みんなの予想と比べてどうだった?`
+];
+function toTalk(s) {
+  const x = truthLabel(s.summary || {}, s.question);
+  s.phase = 'talk'; s.prompt = PROMPTS[Math.floor(Math.random() * PROMPTS.length)](x); s.talkAt = store.now();
+  return s;
+}
+/* 期待した段階・お題のときだけ書き換える(同時に押されても1回だけ進む) */
+async function transit(phase, fn) {
+  const S = st(); if (S.phase !== phase) return;
+  const qid = S.qid || 0;
+  try {
+    await store.tx(ROOM, 'state', cur => {
+      if (!cur || cur.phase !== phase || (cur.qid || 0) !== qid) return;
+      return fn(cur);
+    });
+  } catch (e) { console.error(e); }
+}
+/* 全員のスマホが同じ条件を見て自動で進める。ホストのスマホが一時的に止まっても進行が止まらない */
+async function autoLogic() {
+  if (autoBusy || !room || !room.state || !store) return;
+  const S = st(); const ps = players(); const now = store.now();
+  let job = null;
+  if (!['lobby', 'result'].includes(S.phase)) {
+    const order = arr(S.order);
+    if (Object.keys(ps).some(p => !order.includes(p))) job = () => store.tx(ROOM, 'state', cur => {
+      if (!cur) return; const o = arr(cur.order); const add = Object.keys(players()).filter(p => !o.includes(p));
+      if (!add.length) return; cur.order = [...o, ...add]; return cur;
+    });
+  }
+  if (!job && S.phase === 'hero' && now - (S.heroAt || 0) >= HERO_INTRO_MS && ps[heroPid()]) job = () => transit('hero', s => newQ(s, 0));
+  if (!job && S.phase === 'answer') {
+    const h = heroPid(); const ans = answersNow();
+    if (ps[h] && heroDoneOf(S)) {
+      const guessers = Object.keys(ps).filter(p => p !== h);
+      const allIn = guessers.every(p => ans[p] && ans[p].c != null);
+      if (allIn || now >= S.deadline) job = () => transit('answer', toSpread);
+    }
+  }
+  if (!job) return;
+  autoBusy = true;
+  try { await job(); } catch (e) { console.error(e); } finally { autoBusy = false; }
+}
+
+/* ---------- 操作 ---------- */
+const ACT = {
+  home: () => { location.href = location.pathname; },
+  async create(v, btn) {
+    const name = (ui.hname || '').trim().slice(0, 10);
+    if (!name) { alert('あなたの名前を入力してください'); return; }
+    btn.disabled = true;
+    let code = null;
+    for (let i = 0; i < 20; i++) { const c = String(Math.floor(100000 + Math.random() * 900000)); if (!(await store.exists(c))) { code = c; break; } }
+    if (!code) { alert('部屋を作れませんでした。時間をおいて試してください。'); btn.disabled = false; return; }
+    const token = rid(16), pid = rid(10);
+    idStore.setItem('poi-host-' + code, token); idStore.setItem('poi-pid-' + code, pid);
+    await store.set(code, '', {
+      hostToken: token, hostPid: pid, createdAt: store.ts(),
+      settings: { genres: DEFAULT_GENRES, perHero: 3, time: 20 },
+      players: { [pid]: { name, t: store.ts() } },
+      state: { phase: 'lobby', qid: 0 }
+    });
+    location.href = location.pathname + '?room=' + code;
+  },
+  joinCode() { const c = (ui.code || '').replace(/\D/g, ''); if (c.length === 6) location.href = location.pathname + '?room=' + c; else alert('6桁のコードを入力してください'); },
+  async join(v, btn) {
+    const name = (ui.name || '').trim().slice(0, 10);
+    if (!name) { alert('名前を入力してください'); return; }
+    btn.disabled = true;
+    const pid = myPid() || rid(10); idStore.setItem('poi-pid-' + ROOM, pid);
+    await store.set(ROOM, 'players/' + pid, { name, t: store.ts() });
+  },
+  async rename() { const pid = myPid(); ui.name = nameOf(pid); await store.set(ROOM, 'players/' + pid, null); },
+  async share() {
+    const url = joinUrl();
+    if (navigator.share) { try { await navigator.share({ title: 'ぽい?', text: '「ぽい?」の部屋に参加してね', url }); } catch (e) {} return; }
+    try { await navigator.clipboard.writeText(url); alert('参加用のリンクをコピーしました'); } catch (e) { prompt('このリンクを送ってください', url); }
+  },
+  kick: v => { if (confirm(`${nameOf(v)}さんを外しますか?`)) store.set(ROOM, 'players/' + v, null); },
+  genre(v, el) { const g = new Set(settings().genres); el.checked ? g.add(v) : g.delete(v); store.set(ROOM, 'settings/genres', GENRES.filter(x => g.has(x))); },
+  perHero: (v, el) => store.set(ROOM, 'settings/perHero', +el.value),
+  time: (v, el) => store.set(ROOM, 'settings/time', +el.value),
+  start: () => startRound('lobby'),
+  again: () => startRound('result'),
+  reveal: () => transit('spread', s => { s.phase = 'reveal'; return s; }),
+  toTalk: () => transit('reveal', toTalk),
+  next: () => transit('talk', advance),
+  force() { const p = st().phase; if (p === 'spread') ACT.reveal(); else if (p === 'reveal') ACT.toTalk(); else if (p === 'talk') ACT.next(); },
+  skipHero() { const p = st().phase; if (confirm(`${nameOf(heroPid())}さんの番を飛ばしますか?`)) transit(p, nextHero); },
+  async end() { if (!confirm('ゲームを終えて、この部屋のデータを削除しますか?')) return; await store.remove(ROOM); location.href = location.pathname; },
+  pick: v => { ui.sel = +v; render(); },
+  truth: v => { ui.truth = +v; render(); if (+v === -1) app.querySelector('#free')?.focus(); },
+  heroStep2: () => { if (ui.truth === -1 && !ui.free.trim()) { alert('本当の答えを入力してください'); return; } ui.step = 2; ui.sel = null; render(); },
+  heroBack: () => { ui.step = 1; render(); },
+  submitGuess: () => { if (ui.sel != null) store.set(ROOM, `answers/${st().qid}/${myPid()}`, { c: ui.sel }); },
+  submitHero: () => { if (ui.sel != null) store.set(ROOM, `answers/${st().qid}/${myPid()}`, { t: ui.truth, f: ui.truth === -1 ? ui.free.trim().slice(0, 20) : '', m: ui.sel }); },
+  swap() {
+    if (!confirm('このお題を別のお題に交換しますか?(1回だけ)')) return;
+    const pid = myPid();
+    transit('answer', s => { if (s.swaps && s.swaps[pid]) return; s.swaps = { ...(s.swaps || {}), [pid]: 1 }; return newQ(s, s.qIdx || 0); });
+  }
+};
+function startRound(from) {
+  return transit(from, s => ({
+    phase: 'hero', order: shuffle(Object.keys(players())), heroIdx: 0, qIdx: 0, heroAt: store.now(),
+    qid: s.qid || 0, usedIds: arr(s.usedIds), scores: {}, stats: {}
+  }));
+}
+app.addEventListener('click', e => {
+  keepAwake();
+  const b = e.target.closest('[data-act]'); if (!b || b.tagName === 'SELECT' || b.type === 'checkbox') return;
+  const f = ACT[b.dataset.act]; if (f) f(b.dataset.v, b);
+});
+app.addEventListener('change', e => {
+  const b = e.target.closest('[data-act]'); if (!b || !(b.tagName === 'SELECT' || b.type === 'checkbox')) return;
+  const f = ACT[b.dataset.act]; if (f) f(b.dataset.v, b);
+});
+app.addEventListener('input', e => { const k = e.target.dataset.input; if (k) ui[k] = e.target.value; });
+app.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const k = e.target.dataset?.input;
+  if (k === 'name') ACT.join(null, app.querySelector('[data-act="join"]'));
+  if (k === 'hname') ACT.create(null, app.querySelector('[data-act="create"]'));
+  if (k === 'code') ACT.joinCode();
+});
+</script>
+</body>
+</html>
